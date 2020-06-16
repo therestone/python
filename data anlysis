@@ -1,0 +1,60 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from pyecharts.charts import Bar
+import xlrd
+
+a=input("请输入要查找的人：")
+t=0
+amounts=[]
+names=[]
+data=xlrd.open_workbook('2.xlsx')
+table=data.sheets()[0]
+for i in range(1,table.nrows-1):
+    p_car_amount=table.row_values(i)[10]
+    p_car_name = table.row_values(i)[16]
+    t+=p_car_name.count(a)
+amounts.append(p_car_amount)
+names.append(p_car_name)
+
+print(t)
+# 柱状图
+bar=Bar()
+bar.add_xaxis(names)
+bar.add_yaxis('每车数量',amounts )
+bar.render('销售图表可视化.html')
+
+
+#第二种方式
+wzw=0
+tlj=0
+zsb=0
+cx=0
+ms=0
+nam=['王子文','涂伦君','周绍斌','陈霞','毛三']
+
+for i in range (1,table.nrows-1):
+    p_car_name = table.row_values(i)[16]
+    #print(p_car_name)
+    p_car_amount = table.row_values(i)[10]
+    if p_car_name=='王子文':
+        wzw+=table.row_values(i)[10]
+    elif p_car_name=='涂伦君':
+        tlj+=table.row_values(i)[10]
+    elif p_car_name == '周绍斌':
+        zsb+=table.row_values(i)[10]
+    elif p_car_name == '陈霞':
+        cx+= table.row_values(i)[10]
+    elif p_car_name == '毛三':
+        ms+= table.row_values(i)[10]
+print("总的收购量：",cx)
+
+amts_per_people=[]
+amts_per_people.append(wzw)
+amts_per_people.append(tlj)
+amts_per_people.append(zsb)
+amts_per_people.append(cx)
+
+bar=Bar()
+bar.add_xaxis(nam)
+bar.add_yaxis('per amounts of people',amts_per_people )
+bar.render('农户累计交货.html')
