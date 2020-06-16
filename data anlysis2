@@ -1,0 +1,18 @@
+import matplotlib.pyplot as plt
+from pyecharts.charts import Bar
+import xlrd
+#累计次数
+a=input("请输入要查找的人：")
+t=0
+j=0
+data=xlrd.open_workbook('2.xlsx')
+table=data.sheets()[0]
+for i in range(1,table.nrows-1):
+    p_car_amount=table.row_values(i)[10]
+    p_car_name = table.row_values(i)[16]
+    t+=p_car_name.count(a)
+    if p_car_name==a:
+        j+=table.row_values(i)[10]
+print('总计来车数：',t)
+print('总的数量：', j)
+#累计数量
